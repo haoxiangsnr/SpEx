@@ -1,0 +1,69 @@
+{
+    "seed": 0,
+    "description": "null",
+    "root_dir": "~/Experiments/SpEx",
+    "cudnn_deterministic": false,
+    "trainer": {
+        "module": "trainer.default_fixed_length",
+        "main": "Trainer",
+        "epochs": 1200,
+        "save_checkpoint_interval": 1,
+        "validation": {
+            "interval": 1,
+            "find_max": true,
+            "custom": {
+                "visualize_audio_limit": 20,
+                "visualize_waveform_limit": 20,
+                "visualize_spectrogram_limit": 20,
+                "n_samples": 32000,
+                "sr": 16000,
+                "weights": [0.8, 0.1, 0.1]
+            }
+        }
+    },
+    "model": {
+        "module": "model.SpEx",
+        "main": "Model",
+        "args": {}
+    },
+    "loss_function": {
+        "module": "model.loss",
+        "main": "multi_scale_si_sdr_loss",
+        "args": {
+          "weights": [0.8, 0.1, 0.1]
+        }
+    },
+    "optimizer": {
+        "lr": 0.001,
+        "beta1": 0.9,
+        "beta2": 0.999
+    },
+    "train_dataset": {
+        "module": "dataset.train_fixed_length_waveform_pre_mix_no_preprocessed",
+        "main": "Dataset",
+        "args": {
+            "dataset_list": "~/Datasets/SpeakerBeam/S1_DA_data_from_ME_SNR_total_BG20db_clean_Nonoise_train/dataset_sort_500spks.txt",
+            "limit": null,
+            "offset": 0,
+            "n_samples": 32000,
+            "sr": 16000,
+            "reference_length": 5
+        }
+    },
+    "validation_dataset": {
+        "module": "dataset.new_dataset_validation_fixed_length_waveform_pre_mix_no_preprocessed",
+        "main": "Dataset",
+        "args": {
+            "dataset_list": "~/Datasets/SpeakerBeam/test_S1_real_ALL/dataset.txt",
+            "limit": null,
+            "offset": 0,
+            "sr": 16000
+        }
+    },
+    "train_dataloader": {
+        "batch_size": 24,
+        "num_workers": 24,
+        "shuffle": true,
+        "pin_memory": true
+    }
+}
