@@ -1,2 +1,3 @@
-# SpEx
-Implemation of "Multi-Scale Time Domain Speaker Extraction Network".
+# SpEx: Multi-Scale Time Domain Speaker Extraction Network
+
+Implementation of "SpEx: Multi-Scale Time Domain Speaker Extraction Network".
